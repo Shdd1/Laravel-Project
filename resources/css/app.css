@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#project_type {
+    border-radius: 8px; /* حواف دائرية */
+    padding: 8; /* زيادة المسافة بين النص والإطار */
+    border: 1px solid #ccc; /* لون الحدود */
+    transition: all 0.3s ease; /* تأثير سلس عند التفاعل */
+}
+
+#project_type:focus {
+    border-color: #60aac0; /* تغيير لون الحدود عند التركيز */
+    box-shadow: 0 0 5px rgba(96, 231, 255, 0.5); /* إضافة ظل حول العنصر */
+}
