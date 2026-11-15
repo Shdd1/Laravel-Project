@@ -10,6 +10,13 @@
 <div class="container">
     <h1>All Projects</h1>
 
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
     <form action="{{ route('projects.filter') }}" method="GET" class="mb-3">
         <div class="mb-3">
             <label for="project_type" class="form-label">Project Type</label>
@@ -37,6 +44,7 @@
                     <th>Client Name</th>
                     <th>Project Type</th>
                     <th>Phases</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,6 +64,14 @@
                         </td>
                         <td>
                             <a href="{{ route('projects.filter', ['project_type' => $project->project_type]) }}" class="btn btn-info">View Phases</a>
+                        </td>
+                        <td>
+                            <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this project?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
