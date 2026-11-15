@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <div class="container">
     <h1>Edit Project: {{ $project->name }}</h1>
-    <form action="{{ route('projects.update', $project->id) }}" method="POST">
+    <form action="{{ route('admin.projects.update', $project->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3">
