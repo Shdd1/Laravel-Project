@@ -1,66 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Contracting Projects & Overtime Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A web application built for a contracting company to track its field projects and manage employee overtime in one place. Admins follow the progress of every project phase by phase, while employees submit overtime requests that admins review and approve.
 
-## About Laravel
+Built with **Laravel 11**, **PHP 8.2**, **MySQL**, **Blade**, and **Tailwind CSS**.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## The Problem
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The company runs many projects at once across different sites and trades (HVAC, electrical, plumbing). Project progress and overtime were tracked manually, so it was hard to know where each project stood or to review overtime hours quickly and fairly.
 
-## Learning Laravel
+## Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Project Tracking
+- Create, edit and delete projects with client name and project type
+- Three project types: **HVAC (تكييف)**, **Electrical (كهرباء)** and **Plumbing (سباكة)**
+- Each project type gets its own predefined phases, loaded automatically when the type is selected
+- Update the completion percentage (0–100%) of each phase
+- Filter projects by type and update progress for several projects at once
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Overtime Management
+- Employees submit overtime requests with the project, site, date, hours and reason
+- Employees can view the history of their own requests
+- Admins review all requests and set a status: **Pending**, **Under Review**, **Accepted** or **Rejected**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Sites
+- Manage the company's work sites (create, edit, delete)
+- Every overtime request is linked to a site and a project
 
-## Laravel Sponsors
+### Authentication
+- Registration, login, email verification and password reset (Laravel Breeze)
+- Profile management
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## Tech Stack
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+| Layer | Technology |
+|---|---|
+| Backend | Laravel 11, PHP 8.2 |
+| Database | MySQL, Eloquent ORM, migrations & seeders |
+| Frontend | Blade templates, Tailwind CSS, JavaScript |
+| Build | Vite |
+| Auth | Laravel Breeze |
+| Testing | Pest |
 
-## Contributing
+## Database Design
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+users ──────┐
+            ├──< overtimes >── locations
+projects ───┘        
+   │
+   └──< phases >── fixed_phases
+```
 
-## Code of Conduct
+| Table | Purpose |
+|---|---|
+| `projects` | Project name, client name and project type |
+| `fixed_phases` | Predefined phases for each project type |
+| `phases` | Completion percentage of each phase in a project |
+| `locations` | Company work sites |
+| `overtimes` | Overtime requests: employee, project, site, hours, date, reason, status |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Getting Started
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Requirements
+- PHP 8.2+
+- Composer
+- Node.js & npm
+- MySQL
 
-## License
+### Installation
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+# 1. Clone the repository
+git clone https://github.com/Shdd1/Laravel-Project.git
+cd Laravel-Project
+
+# 2. Install dependencies
+composer install
+npm install
+
+# 3. Create a .env file (use Laravel's default .env.example as a template)
+php artisan key:generate
+```
+
+Set the database settings in `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+```bash
+# 4. Create the tables and load the predefined phases
+php artisan migrate
+php artisan db:seed --class=FixedPhasesSeeder
+
+# 5. Run the app
+npm run dev
+php artisan serve
+```
+
+Then open `http://localhost:8000`.
+
+---
+
+## Main Routes
+
+| Route | Description |
+|---|---|
+| `/projects` | Projects list |
+| `/projects/filter` | Filter projects by type and update phase progress |
+| `/admin/projects` | Manage projects |
+| `/admin/locations` | Manage sites |
+| `/overtimes/create` | Submit an overtime request |
+| `/overtimes` | My overtime requests |
+| `/admin/overtimes` | Review all overtime requests |
+
+---
+
+## Author
+
+**Shahad Alhazmi** — Full Stack Software Engineer
+
+[LinkedIn](https://www.linkedin.com/in/shahadcode) · [GitHub](https://github.com/Shdd1)
